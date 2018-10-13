@@ -1,0 +1,2 @@
+//권한이 member인 유저의 모든 정보 출력
+select * from member where user_auth = (select user_auth from authority where rights = 'member') 
