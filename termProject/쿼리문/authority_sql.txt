@@ -1,4 +1,0 @@
-create table authority(
-user_auth varchar(10)
-authority varchar(10)
-)

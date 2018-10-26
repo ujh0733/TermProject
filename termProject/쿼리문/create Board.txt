@@ -1,7 +1,0 @@
-create table board(
-board_num intboard NOT NULL,
-board_context text NOT NULL,
-board_title varchar(20) NOT NULL,
-board_writer varchar(20) NOT NULL,
-board_posted date NOT NULL,
-board_viewed int NOT NULL)

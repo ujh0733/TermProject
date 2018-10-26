@@ -1,9 +1,0 @@
-create table member(
-user_id varchar(30) primary key,
-user_pwd varchar(30) NOT NULL,
-user_name varchar(40) NOT NULL,
-user_email varchar(30) NOT NULL,
-user_phone varchar(30) NOT NULL,
-user_birth date NOT NULL,
-user_auth varchar(10) NOT NULL
-)
