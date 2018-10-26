@@ -1,8 +1,9 @@
+<script type="text/javascript" src="../jquery-3.3.1.min.js"></script>
 <?php
-	require_once("MemberDAO.php");
-	require_once("BoardDAO.php");
+	require_once("member/MemberDAO.php");
+	require_once("board/BoardDAO.php");
 
-	define("MAIN_PAGE", "login_page.html");
+	define("MAIN_PAGE", "member/login_page.html");
 
 	function getSessionUname(){				//세션에 등록된 유저 이름 리턴
 		return isset($_SESSION["user_name"])?$_SESSION["user_name"]:"";
@@ -41,7 +42,7 @@
 ?>
 	<script>
 		alert("로그인 중입니다. \n메인페이지로 이동합니다.");
-		location.href = "main_page.php";
+		location.href = "../board/main_page.php";
 	</script>
 <?php
 		}
@@ -76,11 +77,11 @@
 <?php
 	}
 
-	function deleteBoard(){
+	function deleteBoard($page){
 ?>
 	<script>
 		alert('삭제 완료!');
-		location.href = "board_page.php";
+		location.href = "board_page.php?page"+<?= $page ?>;
 	</script>
 <?php
 	}
@@ -111,10 +112,10 @@
 					echo "<script>history.back();</script>";
 				}
 
-				if(file_exists("img/$file_name")){	//같은 이름의 파일이 있으면
+				if(file_exists("../img/$file_name")){	//같은 이름의 파일이 있으면
 					
 					$tmp_name = $cut_name.$tmp.".".$ext;
-					while(file_exists("img/$tmp_name")){
+					while(file_exists("../img/$tmp_name")){
 						$tmp++;
 						$tmp_name = $cut_name.  $tmp.".".$ext;
 					}
@@ -123,19 +124,32 @@
 
 				$save_name = iconv("cp949", "utf-8", $file_name);	//한글저장
 
-				if(move_uploaded_file($temp_name, "img/$save_name")){
+				if(move_uploaded_file($temp_name, "../img/$save_name")){
 					$upload_succecceded = true;
 				}
 			}
 		if($upload_succecceded == true)
 			return urldecode($save_name);
 	}
-?>	
 
+	function bdUrl($file, $num, $page){	//페이지네이션
+		$join = "?";
+		if($num){
+			$file .= $join . "num=$num";
+			$join = "&";
+		}
+		if($page){
+			$file .= $join . "page=$page";
+		}
+
+		return $file;
+	}
+?>	 
+	
 	<script>
 		//프로필사진 클릭시 새창에서 보여주기
 		function open_img(url){
-			var win = window.open(url, "", "width=500,height=500");
+			var win = window.open(url, "", "width=500,height=500,cursor='pointer'");
 			win.onclick = function(){
 				this.close();
 			}
@@ -143,8 +157,8 @@
 
 		//이미지 미리보기 script코드
 		window.onload = function(){
-			var image = document.getElementById("profile").onchange = function(){
-					readImg('profile', 'example');
+			var image = document.getElementById("profile_picture").onchange = function(){
+					readImg('profile_picture', 'example');		
 				}
 		};
 
@@ -154,7 +168,7 @@
 			reader.readAsDataURL(file);
 			if(!file.type.match("image/*")){
 				alert('이미지만 업로드 가능합니다.');
-				var tmp = document.getElementById("profile");
+				var tmp = document.getElementById("profile_picture");
 				exit();
 			}
 			reader.onload = function(){
@@ -166,4 +180,40 @@
 				return;
 			}
 		};
+		
+		function openDaumZipAddress() {			//주소 찾기 다음api
+            new daum.Postcode({
+                oncomplete:function(data) {
+                    jQuery('#postcode1').val(data.postcode1);
+                    jQuery('#postcode2').val(data.postcode2);
+                    jQuery('#addr').val(data.address);
+                    jQuery('#address_etc').focus();
+                    console.log(data);
+                }
+            }).open();
+        }
+
+        function open_window(url){
+        	var mail = $("#email").val();
+        	if(mail == ""){
+        		alert('메일 주소를 입력해 주세요.');
+        		exit();
+        	}
+        	window.open(url+'?email='+mail, "", "width=500,height=500");
+        };
+
+        function stopwatch(){
+			var timer = 20;			//시간초 지정
+			 setInterval(function(){
+			 	document.getElementById("date").innerHTML = "";
+			 	document.getElementById("date").innerHTML += timer;
+			 	if(timer == -1){
+			 		alert("지정된 시간이 끝났습니다.\n다시 시도해 주세요");
+			 		window.close();
+			 	}
+			 	timer--;
+			 	console.log(timer);
+			 }, 1000)
+		}
+
 </script>

@@ -1,0 +1,139 @@
+
+.carousel-inner {
+      width: 100%;
+      height: 100%;
+  }
+  
+  #demo{    
+    width: 800px;
+    height: 400px;
+    margin:0 auto;
+    margin-bottom: 20px;
+  }
+
+  .fakeimg {
+      height: 200px;
+      background: #aaa;
+  }
+  .information{
+    vertical-align: middle;
+    text-align: right;
+    padding: 0.5px;
+  }
+  #print{
+    display:inline-block;
+  }
+  
+  #profile{
+    width: 40px;
+    height: 40px;
+  }
+
+  .topdown{
+    display: inline-block;
+    float: right;
+    position:fixed;
+    width: 55px;
+    left: 94%;
+    top: 75%;
+  }
+
+  .topdown > a{
+    width: 55px;
+    font-size: 1px;
+    margin: 0 auto;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  #main_logo{
+    width: 120px;
+    height: 120px;
+    position: relative;
+    left: 45%;
+    margin-bottom: 5px;
+  }
+  #search{
+    width:500px;
+    left: 35%;
+    margin-bottom: 5px;
+  }
+  .item{
+    width: 1200px;
+  }
+  #card_img{
+    width: 100%;
+    height: 65%;
+  }
+  .mini{
+    width: 100%;
+    height: 100%;
+  }
+
+  .card{
+    width: 250px;
+    height: 520px;
+    float: left;
+    margin : 10px;
+  }
+  .card:hover{
+    border: 2px solid red;
+  }
+  .cardText{
+    width:100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #imgLink{
+    float: right;
+  }
+
+  h3{
+    text-align: center;
+  }
+  #tmain{
+    margin-top: 5px;
+  }
+  #top_menu{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-top: solid 0.5px #e8e8e8;
+    border-bottom: solid 0.5px black;
+  }
+  .menu_list{
+    float: left;
+    padding: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .menu_list:hover{
+    color: #7fd887;
+  }
+  
+  .board{
+      width: 80%;
+      margin: 0 auto;
+      margin-top: 25px;
+  }
+  #board_body{
+
+  }
+
+    #right{
+      text-align: right;
+    }
+    img{
+      width: 300px;
+      height: 350px;
+
+    }
+    .info2{
+      display: inline-flex;
+    }
+    .info{
+      margin-left: 50px;
+    }

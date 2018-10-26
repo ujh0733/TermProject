@@ -1,0 +1,1 @@
+insert into board values(1, 'Hello Worold!', 'testt', 'adminTest', date(now()), 55)

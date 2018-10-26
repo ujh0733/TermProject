@@ -1,5 +1,29 @@
 <?php
 require_once('PHPMailer/PHPMailerAutoload.php');
+	
+	function get_random_string($type = '', $len = 5) {		//랜덤변수 생성
+    $lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    $uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $numeric = '0123456789';
+    $special = '`~!@#$%^&*()-_=+\\|[{]};:\'",<.>/?';
+    $key = '';
+    $token = '';
+    if ($type == '') {
+        $key = $lowercase.$uppercase.$numeric;
+    } else {
+        if (strpos($type,'09') > -1) $key .= $numeric;
+        if (strpos($type,'az') > -1) $key .= $lowercase;
+        if (strpos($type,'AZ') > -1) $key .= $uppercase;
+        if (strpos($type,'$') > -1) $key .= $special;
+    }
+    for ($i = 0; $i < $len; $i++) {
+        $token .= $key[mt_rand(0, strlen($key) - 1)];
+    }
+    return $token;
+	}
+
+	$check = get_random_string('azAz09&');
+
 
 	$mail = new PHPMailer(); 
 
@@ -12,8 +36,8 @@ require_once('PHPMailer/PHPMailerAutoload.php');
 		$mail->isSMTP(); 
 		$mail->SMTPDebug = 2; 
 
-		$subject = "Ticket Wave의 회원가입을 축하드립니다.";
-		$mail_from  = "TicketWave@naver.com";
+		$subject = "Ticket Wave의 회원가입 이메일 인증 코드입니다.";
+		$mail_from  = "ujh0733@naver.com";
 		$mail_to  = $user_email;
 
 		//제목과 보내는 사람 이름 등등은 직접적으로 인코딩 변경
@@ -21,7 +45,7 @@ require_once('PHPMailer/PHPMailerAutoload.php');
 		$mail_from = "=?UTF-8?B?".base64_encode($mail_from )."?="."\r\n"; 
 		$mail_to = "=?UTF-8?B?".base64_encode($mail_to)."?="."\r\n";
 
-		$message =  "Ticket Wave의 회원가입을 축하드립니다!!\n 이제 다양한 티켓을 구매하실 수 있습니다!!";
+		$message =  "해당 문자를 홈페이지에 입력해 주세요<br>$check";
 		  
 		$mail->Debugoutput = 'html'; 
 		  
