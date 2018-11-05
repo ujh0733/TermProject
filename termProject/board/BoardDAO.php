@@ -276,5 +276,91 @@
 				return $rs;
 			}
 
+			public function savePlaceLocation($num, $name, $lat, $lng){
+				try{
+					$sql = "insert into theater values(:board_num, :theater_name, :theater_lat, :theater_lng)";
+
+					$pstmt = $this->db->prepare($sql);
+					$pstmt->bindValue(":board_num", $num, PDO::PARAM_INT);
+					$pstmt->bindValue(":theater_name", $name, PDO::PARAM_STR);
+					$pstmt->bindValue(":theater_lat", $lat, PDO::PARAM_STR);
+					$pstmt->bindValue(":theater_lng", $lng, PDO::PARAM_STR);
+
+					$pstmt->execute();
+
+				}catch(PDOException $e) {
+					exit($e->getMessage());
+				}
+			}
+
+			public function getPlaceLocation($num){
+				try{
+					$sql = "select * from theater where board_num = :num";
+
+					$pstmt = $this->db->prepare($sql);
+					$pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+					$pstmt->execute();
+
+					$rs = $pstmt->fetch();
+				}catch(PDOException $e) {
+					exit($e->getMessage());
+				}
+				return $rs;
+			}
+
+			public function deletePlaceLocation($num){
+				try{
+					$sql = "delete from theater where board_num = :num";
+
+					$pstmt = $this->db->prepare($sql);
+					$pstmt->bindValue(":num" , $num, PDO::PARAM_INT);
+
+					$pstmt->execute();
+
+				}catch(PDOException $e) {
+					exit($e->getMessage());
+				}
+			}
+
+			public function manyDeletePlaceLocation($num){
+				try{
+					$sql = "delete from theater where board_num in ($num)";
+
+					$pstmt = $this->db->prepare($sql);
+
+					$pstmt->execute();
+				}catch(PDOException $e) {
+					exit($e->getMessage());
+				}
+			}
+
+			public function updatePlaceLocation($num, $name, $lat, $lng){
+				try{
+					$sql = "update theater set theater_name = :name, theater_lat = :lat, theater_lng = :lng where board_num = :num";
+
+					$pstmt = $this->db->prepare($sql);
+					$pstmt->bindValue(":name", $name, PDO::PARAM_STR);
+					$pstmt->bindValue(":lat", $lat, PDO::PARAM_STR);
+					$pstmt->bindValue(":lng", $lng, PDO::PARAM_STR);
+					$pstmt->bindValue(":num", $num, PDO::PARAM_INT);
+					$pstmt->execute();
+
+				}catch(PDOException $e){
+					exit($e->getMessage());
+				}
+			}
+
+			public function sortPlaceLocation($num){
+				try{
+					$sql = "update theater set board_num = board_num -1 where board_num > :board_num";
+					$pstmt = $this->db->prepare($sql);
+					$pstmt->bindValue(":board_num", $num, PDO::PARAM_INT);
+					$pstmt->execute();
+				}catch(PDOException $e){
+					exit($e->getMessage());
+				}
+			}
+
+
 	}
 ?>

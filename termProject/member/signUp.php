@@ -2,6 +2,18 @@
 	require_once("../tools.php");
 	require_once("MemberDAO.php");
 	
+	/*
+	$mail_check = requestvalue("mail_result_check");
+	if($mail_check == false){
+?>
+	<script>
+		alert('메일 인증을 진행해 주세요.');
+		history.back();
+		exit();
+	</script>
+<?php
+		exit();
+	}*/
 
 	$user_id = requestValue("user_id");
 	$user_pwd = requestValue("user_pwd");
@@ -36,8 +48,15 @@
 
 	}else{
 	$mdao->insertMember($user_id, $user_pwd, $user_name, $user_email, $user_phone, $user_birth, $postcode, $user_addr);
-	require_once("../mail_send.php");
+?>
 
+	<div id="mailer">
+		<?php require_once("../mail_send.php"); ?>
+	</div>
+	<script type="text/javascript">
+		$("#mailer").html('');
+	</script>
+<?php
 	insertSuccess();
 	}
 ?>

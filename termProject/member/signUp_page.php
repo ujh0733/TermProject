@@ -17,6 +17,28 @@
       }
       .lh-condensed { line-height: 1.25; }
     </style>
+    <script>
+      var overlapCheck = true;
+
+      function mailOverlap(){
+        overlapCheck = false
+      }
+
+      function overlapChecked(){
+        return overlapCheck;
+      }
+      
+      function mailOver(){
+        overlapCheck = true;
+      }
+
+      function mailCheckSuccess(){
+        <?php $mail_check = true ?>
+      }
+      function mailCheckFail(){
+        <?php $mail_check = false ?>
+      }
+    </script>
   </head>
 
   <body class="">
@@ -72,6 +94,7 @@
               <div>
               <input type="button" value="메일 인증" class="btn btn-primary" name="mail_check" id="mail_check" onclick="open_window('../mail_check_page.php');" style="margin-top: 5px;">
               <input type="text" name="email_result" id="email_result" value="메일인증 미완료" readonly style="border: none; color: red;">
+              <input type="hidden" name="mail_result_check" value="<?= $mail_check ?>">
               </div>
             </div>
 
@@ -231,7 +254,7 @@
             </div>
             <hr class="mb-4">
    
-            <button class="btn btn-primary btn-lg btn-block" type="submit" id="finish">Sign Up</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="finish" onclick="return submit_check()">Sign Up</button>
           </form>
         </div>
       </div>
@@ -273,6 +296,13 @@
           });
         }, false);
       })();
+
+      function submit_check(){
+        if($("#email_result").val() == "메일인증 미완료"){
+          alert('이메일 인증을 진행해 주세요');
+          return false;
+        }
+      }
     </script>
   </body>
 </html>

@@ -7,6 +7,7 @@
 
   $board_info = $bdao->getBoardPage();
 
+/*
   $user_name = getSessionUname();
 
   $user_id = getSessionUid();
@@ -16,8 +17,8 @@
   if($user_name == ""){
     sessionFailed();
   }
+  $user_profile = "../img/".$_SESSION["user_profile"];*/
 
-  $user_profile = "../img/".$_SESSION["user_profile"];
 
   //Pagenation
   $page = requestValue("page");
@@ -76,7 +77,7 @@
       <thead style="background-color: skyblue">
         <tr>
 
-          <?php if($auth == "TOP") : ?>
+          <?php if($user_id != "" && $auth == "TOP") : ?>
             <th>Sel</th>
           <?php endif ?>
 
@@ -91,15 +92,15 @@
       <tbody>
 
       <?php foreach($msgs as $row) :?>
-        <?php if($auth == "TOP") : ?>
+        <?php if($user_id != "" && $auth == "TOP") : ?>
 
           <tr>
             <td><input type="checkbox" name="check[]" value="<?= $row['board_num']."," ?>"></td>
             <td onclick="location.href='board_view_cnt.php?board_num=<?= $row['board_num']?>&page=<?= $page ?>'"><?= $row['board_num']?></td>
-            <td><?= $row['board_opener']?></td>
-            <td><?= $row['board_title']?></td>
-            <td><?= $row['board_posted']?></td>
-            <td><?= $row['board_viewed']?></td>
+            <td onclick="location.href='board_view_cnt.php?board_num=<?= $row['board_num']?>&page=<?= $page ?>'"><?= $row['board_opener']?></td>
+            <td onclick="location.href='board_view_cnt.php?board_num=<?= $row['board_num']?>&page=<?= $page ?>'"><?= $row['board_title']?></td>
+            <td onclick="location.href='board_view_cnt.php?board_num=<?= $row['board_num']?>&page=<?= $page ?>'"><?= $row['board_posted']?></td>
+            <td onclick="location.href='board_view_cnt.php?board_num=<?= $row['board_num']?>&page=<?= $page ?>'"><?= $row['board_viewed']?></td>
           </tr>
       
         <?php else : ?>
@@ -184,7 +185,7 @@
     
     <div class="float-right" style="">
 
-      <?php if($auth == "TOP") : ?>
+      <?php if($user_id != "" && $auth == "TOP") : ?>
         <input type="submit" name="delete" value="삭제" class="btn btn-danger" onclick="return confirm('선택한 항목을 삭제하시겠습니까?')">
       <?php endif ?>
 

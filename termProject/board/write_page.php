@@ -12,7 +12,6 @@
 <html>
 <head>
 	<?php require_once("../html_header.php") ?>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<style>
 		#context{
 			height: 300px;
@@ -33,11 +32,12 @@
 
       }
 	</style>
+    <script src="ckeditor/ckeditor.js"></script>
 </head>
 <body>
   <?php require_once("../menu.php") ?>
 	<div class="jumbotron">
-		<form action="write.php" method="POST" enctype="multipart/form-data">
+		<form action="write.php" method="POST" enctype="multipart/form-data" id="postForm">
 
 			<!--Value값은 사용자 아이디가 들어가야 함 -->
 			<input type="hidden" name="writer" value="<?= $user_name ?>">
@@ -174,17 +174,20 @@
 
       <div id="place_form">
         <p>공연 장소</p>
-        <input type="" name="place" id="place" required>
+        <input type="text" name="place" id="place" readonly required style="background-color:#bbb;">
+        <input type="button" name="theater" value="지도검색" onclick="open_maps();">
+        <input type="hidden" name="theater_lat" id="theater_lat">
+        <input type="hidden" name="theater_lng" id="theater_lng">
       </div>
 
       <div>
         <p>공연 시간</p>
-        <input type="text" name="time" id="time" required>
+        <input type="text" name="time" id="time" required>분
       </div>
 
       <div id="price_form">
         <p>입장 가격</p>
-        <input type="text" name="price" id="price" required>
+        <input type="text" name="price" id="price" required>원
       </div>
 
       <div id="viewingClass_form">
@@ -209,13 +212,19 @@
       </div>
 
 			<div class="from-group">
-				<label for="context">Context</label>
-				<textarea id="context" class="form-control" name="context"></textarea>
+				<label for="">Context</label>
+        <textarea id="editor1" name="context"></textarea>
+          <script>
+              CKEDITOR.replace('editor1',{
+                filebrowserUploadUrl: 'uploader.php';
+              });
+          </script>
 			</div>
-			<div class="from-group">&nbsp</div>
 
+			<div class="from-group">&nbsp</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
+    <?php require_once('../footer.php') ?>
 	</div>
 </body>
  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

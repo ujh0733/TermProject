@@ -1,9 +1,28 @@
+<?php
+  require_once("../tools.php");
+  $mdao = new MemberDAO();
+
+  $user_name = getSessionUname();
+
+  $user_id = getSessionUid();
+
+  $auth = $mdao->authCheck($user_id);
+
+  if($user_id != "")
+    $user_profile = "../img/".$_SESSION["user_profile"];
+?>
+
 <div class="information" id="top">
+  <?php if($user_id == "") : ?>
+    <input type="button" name="login" onclick="login_page();" class="btn btn-primary" value="로그인">
+    <input type="button" name="signup" onclick="location.href='../member/signUp_page.php'" class="btn btn-primary" value="회원가입">
+  <?php else : ?>
       <p id="print">환영합니다.&nbsp<?= $user_name?>님</p>
       <img src="<?= $user_profile ?>" id="profile" style="cursor:pointer" onclick="open_img('../img/<?= $user_profile ?>')">
       <input type="button" class="btn btn-primary" name="ChangeInfor" onclick="location.href='../member/updateInformation_page.php'" id="change_button" value="정보변경">
       <input type="button" class="btn btn-red" name="logout" onclick="location.href='../member/logout.php'" value="로그아웃">
       <img src="../img/cart.png" style="width: 45px; height: 45px; margin-right:2px;" onclick="location.href='cart.php'">
+  <?php endif ?>
 </div>
 
 <div id="tmain">

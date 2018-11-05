@@ -1,9 +1,12 @@
-<script type="text/javascript" src="../jquery-3.3.1.min.js"></script>
+<script src="../jquery-3.3.1.min.js"></script>
+<script>
+	
+</script>
 <?php
 	require_once("member/MemberDAO.php");
 	require_once("board/BoardDAO.php");
 
-	define("MAIN_PAGE", "member/login_page.html");
+	define("MAIN_PAGE", "php2/termProject/member/login_page.html");
 
 	function getSessionUname(){				//세션에 등록된 유저 이름 리턴
 		return isset($_SESSION["user_name"])?$_SESSION["user_name"]:"";
@@ -31,7 +34,7 @@
 ?>
 	<script>
 		alert("세션이 만료되었습니다. \n다시 로그인 해 주세요.");
-		location.href = "login_page.php";
+		location.href = "../member/login_page.php";
 	</script>
 <?php	
 		exit();
@@ -53,7 +56,7 @@
 ?>
 	<script>
 		alert('성공적으로 가입이 완료되었습니다!\n다시 로그인 해 주세요!');
-		location.href = "login_page.php";
+		location.href = "../board/main_page.php";
 	</script>
 <?php
 		exit();
@@ -155,6 +158,13 @@
 			}
 		};
 
+		function login_page(){
+			var left = document.body.clientWidth/2+"px";
+			var top = screen.height/2+"px";
+
+			window.open("../member/login_page.php", "", "width=500, height=700, left="+left+", top="+top+"");
+		}
+
 		//이미지 미리보기 script코드
 		window.onload = function(){
 			var image = document.getElementById("profile_picture").onchange = function(){
@@ -202,11 +212,20 @@
         	window.open(url+'?email='+mail, "", "width=500,height=500");
         };
 
+        //글쓰기에서 지도보기
+        function open_maps(){
+        	window.open("theaterMaps.php","","width=700, height=500");
+        }
+        //board_view에서 지도보기
+        function open_Theater(num){
+        	window.open('viewTheaterMaps.php?board_num='+num,"", "width=700, height=500");
+        }
+
         function stopwatch(){
 			var timer = 20;			//시간초 지정
 			 setInterval(function(){
-			 	document.getElementById("date").innerHTML = "";
-			 	document.getElementById("date").innerHTML += timer;
+			 	$("#date").html('');
+			 	$("#date").html(timer);
 			 	if(timer == -1){
 			 		alert("지정된 시간이 끝났습니다.\n다시 시도해 주세요");
 			 		window.close();

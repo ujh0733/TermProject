@@ -15,13 +15,19 @@
 
   $board_info = $bdao->getBoard($board_num);
 
+  $loc = $bdao->getPlaceLocation($board_num);
+
+  $user_auth = $mdao->authCheck($user_id);
+
   if($user_id != $board_writer){
+    if($user_auth != "TOP"){
 ?>
   <script>
     alert('작성자만 수정할 수 있습니다!');
     history.back();
   </script>
 <?php
+    }
   }
 
   $board_genre = $bdao->getBoardGenre($board_info['board_genre']);
@@ -60,6 +66,7 @@
       }
     
   </style>
+  <script src="ckeditor/ckeditor.js"></script>
 </head>
 <body>
   <?php require_once("../menu.php") ?>
@@ -202,10 +209,14 @@
         </select>
       </div>
 
-      <div id="place_form">
+       <div id="place_form">
         <p>공연 장소</p>
-        <input type="" name="place" id="place" value="<?= $board_info['board_place'] ?>" required>
+        <input type="text" name="place" id="place" readonly required style="background-color:#bbb;" value="<?= $board_info['board_place'] ?>">
+        <input type="button" name="theater" value="지도검색" onclick="open_maps();">
+        <input type="hidden" name="theater_lat" id="theater_lat" value="<?= $loc['theater_lat']?>">
+        <input type="hidden" name="theater_lng" id="theater_lng" value="<?= $loc['theater_lng']?>">
       </div>
+
 
       <div>
         <p>공연 시간</p>
@@ -239,23 +250,16 @@
                 <label for="upload"><img src="../img/<?= $board_info['board_picture'] ?>" id="example"></label>
               </div>
           </div>
-          <!--
-              <div>
-                <label for="profile">Profile Select</label>
-                <div id="imgSelect">
-                  <input type="file" id="profile" name="user_profile" class="btn btn-primary" accept=".jpg, .jpeg, .png, .gif">
-                  <div id="preview">
-                    <label for="upload"><img src="../img/<?= $user_profile ?>" id="example"></label>
-                  </div>
-               </div>
-              </div>
-            -->
       </div>
 
       <div class="from-group">
-        <label for="context">Context</label>
-        <textarea id="context" class="form-control" name="context"><?= $board_info['board_context'] ?></textarea>
+        <label for="">Context</label>
+        <textarea id="editor1" name="contents" value="<?= $boarD_info['board_context']?>"></textarea>
+          <script>
+              CKEDITOR.replace('editor1');
+          </script>
       </div>
+
       <div class="from-group">&nbsp</div>
 
       <input type="submit" class="btn btn-primary" value="수정 완료">

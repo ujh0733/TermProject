@@ -11,11 +11,11 @@
 
   $user_id = getSessionUid();
 
-  if($user_name == ""){
+  /*if($user_name == ""){
     sessionFailed();
-  }
+  }*/
 
-  $user_profile = "../img/".$_SESSION["user_profile"];
+  //$user_profile = "../img/".$_SESSION["user_profile"];
 
   $search = requestValue('search_bar');
 

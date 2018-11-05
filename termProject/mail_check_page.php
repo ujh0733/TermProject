@@ -1,7 +1,22 @@
+<script>
+	window.onbeforeunload = function(){		//창 닫을시 실행
+		window.opener.mailOver();
+	}
+
+	var now = window.opener.overlapChecked();
+		if(now == false){
+			alert('메일 인증이 진행중입니다....');
+			window.close();
+			exit();
+		}
+
+	window.opener.mailOverlap();
+</script>
 <?php
 	require_once("tools.php");
 
 	$user_email = requestValue("email");
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,7 +49,7 @@
 	<div id="mailer">
 		<?php require_once("mail_send_signUp.php") ?>
 	</div>
-		<script type="text/javascript">
+		<script>
 			$("#mailer").html('');
 		</script>
 
@@ -50,6 +65,7 @@
 		</div>
 </body>
 	<script type="text/javascript">
+
 		function check_code(){
 			var user_result = $("#user_result").val();
 			var result = $("#result").val();
@@ -57,12 +73,27 @@
 			if(result == user_result){
 				alert('인증이 완료되었습니다.');
 				tmp = "메일인증 완료";
+				//window.opener.document.getElementById("email_result").value = tmp;
+				//window.opener.document.getElementById("email_result").style = "color:green; border:none";
+				change_check(tmp, "green");
+				//window.opener.mailCheckSuccess();
 			}else{
 				alert('인증 번호가 틀립니다. \n 다시 시도해 주세요');
+				//window.opener.document.getElementById("email_result").value = tmp;
+				//window.opener.document.getElementById("email_result").style = "color:red; border:none";
+				change_check(tmp, "red");
+				//window.opener.mailCheckFail();
 			}
-			window.opener.document.getElementById("email_result").value = tmp;
-			window.opener.document.getElementById("email_result").style = "color:green; border:none;";
+			//window.opener.mailOver();
 			window.close();
 		}
+
+		function change_check(txt, txtColor){
+			window.opener.document.getElementById("email_result").value = txt;
+			window.opener.document.getElementById("email_result").style = "color:"+txtColor+"; border:none;";
+		}
+
+		
+
 	</script>
 </html>

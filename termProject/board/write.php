@@ -9,6 +9,7 @@
 
 	$board_title = requestValue("title");
 	$board_context = requestValue("context");
+
 	$board_writer = requestValue("writer");
 	$board_opener = requestValue("opener");
 
@@ -29,11 +30,14 @@
 	$board_viewingClass = requestValue("viewingClass");
 
 	$board_picture = "board_picture";
-	
 
-	if($board_title && $board_context && $board_writer){
+	$theater_lat = requestValue("theater_lat");
+	$theater_lng = requestValue("theater_lng");
+
+	if($board_title && $board_writer){
 		$board_picture = saveImg($board_picture);
 		$bdao->writeBoard($count+1, $board_title, $board_context, $board_writer, $board_opener, $start_term, $end_term, $board_place, $board_time, $board_genre, $board_price, $board_viewingClass, $board_picture);
+		$bdao->savePlaceLocation($count+1, $board_place, $theater_lat, $theater_lng);
 		insertWrite();
 	}else{
 		insertBoardBack();

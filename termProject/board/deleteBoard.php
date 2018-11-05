@@ -20,7 +20,9 @@
 		}
 
 		$bdao->manyDeleteBoard($num);
+		$bdao->deletePlaceLocation($num);
 		$bdao->sortBoard($lastNum);
+		$bdao->sortPlaceLocation($lastNum);
 ?>
 		<script type="text/javascript">
 			alert('해당 항목들을 삭제하였습니다!');
@@ -41,7 +43,9 @@
 	
 	if($user_id == $board_writer){
 			$bdao->deleteBoard($board_num);
+			$bdao->deletePlaceLocation($board_num);
 			$bdao->sortBoard($board_num);
+			$bdao->sortPlaceLocation($board_num);
 
 			deleteBoard($page);
 	}else{

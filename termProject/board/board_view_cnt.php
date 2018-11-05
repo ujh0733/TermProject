@@ -7,6 +7,7 @@
 	$board_num = requestValue('board_num');
 	$page = requestValue("page");
 
+	
 	$bdao->increaseViewed($board_num);
 
 ?>

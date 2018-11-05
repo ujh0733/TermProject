@@ -6,7 +6,8 @@
 	$board_num = requestValue('num');
 	
 	$board_title = requestValue("title");
-	$board_context = requestValue("context");
+	//$board_context = requestValue("context");
+	$board_context = $_POST['contents'];
 	$board_writer = requestValue("writer");
 	$board_opener = requestValue("opener");
 
@@ -28,6 +29,9 @@
 
 	$board_picture = "board_picture";
 
+	$theater_lat = requestValue("theater_lat");
+	$theater_lng = requestValue("theater_lng");
+
 	$bdao = new BoardDao();
 
 	if($board_title && $board_context){
@@ -38,7 +42,7 @@
 		}
 
 		$bdao->updateBoard($board_num, $board_title, $board_context, $board_writer, $board_opener, $start_term, $end_term, $board_place, $board_time, $board_genre, $board_price, $board_viewingClass, $board_picture);
-			
+		$bdao->updatePlaceLocation($board_num, $board_place, $theater_lat, $theater_lng);
 		updateBoard();
 	}else{
 ?>

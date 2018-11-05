@@ -10,11 +10,12 @@
 
   $user_id = getSessionUid();
 
+/*
   if($user_name == ""){
     sessionFailed();
   }
-
-  $user_profile = "../img/".$_SESSION["user_profile"];
+*/
+  //$user_profile = "../img/".$_SESSION["user_profile"];
 
   $board_info = $bdao->getPrint();//메인페이지 기간순으로 뿌리기
   $board_info_viewed = $bdao->getPrintViewed();//메인페이지 인기순으로 뿌리기

@@ -13,4 +13,4 @@
 	session_destroy();
 ?>
 
-<meta http-equiv="refresh" content="0;url=login_page.php" />
+<meta http-equiv="refresh" content="0;url=../board/main_page.php" />

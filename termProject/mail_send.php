@@ -42,7 +42,7 @@ require_once('PHPMailer/PHPMailerAutoload.php');
 		  
 		$mail->Subject = $subject; 
 		  
-		$mail->msgHTML($message, dirname(__FILE__)); 
+		//$mail->msgHTML($message, dirname(__FILE__)); 
 		  
 		$mail->AltBody = 'This is a plain-text message body'; 
 		  

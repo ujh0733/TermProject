@@ -6,17 +6,17 @@
 
 			$bdao = new BoardDao();
 			$mdao = new MemberDao();
-
+/*
 			$user_name = getSessionUname();
 			$user_id = getSessionUid();
 
 			if($user_name == ""){
 				sessionFailed();
-			}
+			}*/
 
       $page = requestValue("page");
 
-			$user_profile = "../img/".$_SESSION["user_profile"];
+			//$user_profile = "../img/".$_SESSION["user_profile"];
 
 			$board = $bdao->getBoard($board_num);
 
@@ -59,23 +59,32 @@
 			<div class="info2">
 				<img src="../img/<?= $board['board_picture']?>">
 
-<div class="list-group info">
+				<div class="list-group info">
 
-
-  <a class="list-group-item list-group-item-action active">
-    공연 정보
-  </a>
-  <a class="list-group-item list-group-item-action">공연 장소 : <?= $board['board_place'] ?></a>
-  <a class="list-group-item list-group-item-action">관람 등급 : <?= $viewingClass ?></a>
-  <a class="list-group-item list-group-item-action">공연 기간 : <?= $board['board_term_open']." ~ ".$board['board_term_close'] ?></a>
-  <a class="list-group-item list-group-item-action disabled">가격 : <?= $board['board_price'] ?>원</a>
-  <a class="list-group-item list-group-item-action disabled">공연 시간 : <?= $board['board_performanceTime'] ?>분</a>
-</div>
+				  <a class="list-group-item list-group-item-action active">
+				    공연 정보
+				  </a>
+				  <a class="list-group-item list-group-item-action">공연 장소 : <?= $board['board_place'] ?>&nbsp;&nbsp;<input type="button" name="maps" value="지도보기" onclick="open_Theater(<?= $board_num ?>);"></a>
+				  <a class="list-group-item list-group-item-action">관람 등급 : <?= $viewingClass ?></a>
+				  <a class="list-group-item list-group-item-action">공연 기간 : <?= $board['board_term_open']." ~ ".$board['board_term_close'] ?></a>
+				  <a class="list-group-item list-group-item-action disabled">가격 : <?= $board['board_price'] ?>원</a>
+				  <a class="list-group-item list-group-item-action disabled">공연 시간 : <?= $board['board_performanceTime'] ?>분</a>
+				</div>
 	</div>
-
+<div style="float: right;">
+	<form action="../member/login_page.php?board_num=<?= $board_num ?>&page=<?= $page ?>" method="POST">
+	<?php if($user_id) : ?>
+		<input type="button" name="buy" onclick="location.href='buy.php?num=<?= $board['board_num'] ?>'" class="btn btn-primary" value="예매하기">
+		<input type="button" name="cart" onclick="location.href='cart.php?num=<?= $board['board_num'] ?>'" class="btn btn-primary" value="장바구니 담기">
+	<?php else : ?>
+		<input type="submit" name="buy" onclick="return confirm('예매를 위해서는 로그인을 해야 합니다.')" class="btn btn-primary" value="예매하기">
+		<input type="button" name="cart" onclick="location.href='cart.php?num=<?= $board['board_num'] ?>'" class="btn btn-primary" value="장바구니 담기">
+	<?php endif ?>
+	</form>
+</div>
 		
 			<hr>
-
+			<h3>내용</h3>
 			<p><?= $board_context?></p>
 		</div>
 		<a onclick="location.href='board_page.php?page=<?= $page ?>'" class="btn btn-primary">목록</a>

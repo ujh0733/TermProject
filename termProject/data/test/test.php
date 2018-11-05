@@ -10,3 +10,11 @@
 	*/
 echo "이 내용은 php 입니다.";
 ?>
+<script type="text/javascript">
+	var a = true;
+	if(a){
+		alert('tt');
+	}else{
+		alert('aa');
+	}
+</script>
