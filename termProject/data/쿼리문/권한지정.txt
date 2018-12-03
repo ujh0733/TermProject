@@ -1,3 +1,0 @@
-alter table termproject
-add constraint member_userauth_fk foreign key(user_auth)
-references member(user_auth))

@@ -1,6 +1,0 @@
-
-<body>
-<h1>AJAX</h1>
-	<p>Hello World!</p>
-</body>
-</html>
