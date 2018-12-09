@@ -45,7 +45,7 @@
 
     <div class="container">
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="img/main1.png" alt="" width="72" height="72">
+        <img class="d-block mx-auto mb-4" src="img/page/main1.png" alt="" width="72" height="72">
         <h2>Sign Up Page</h2>
         <p class="lead">아래 정보를 하나도 빠짐없이 입력해 주세요.</p>
       </div>

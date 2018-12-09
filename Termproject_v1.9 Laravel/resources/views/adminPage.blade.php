@@ -95,9 +95,6 @@
 				<div onclick="changeBoard('ipManage')">
 					<strong>IP 관리</strong>
 				</div>
-				<div onclick="changeBoard('questionManage')">
-					<strong>문의 관리</strong>
-				</div>
 			</div>
 		</nav>
 		<div id="adminPage_body">
@@ -253,12 +250,6 @@
 								</tbody>
 							</table>
 						</div>
-					</div>
-				</div>
-				<!-- User's Question Management -->
-				<div id="questionManage" style="display: none">
-					<div id="questionManageForm">
-						<h4>문의 관리</h4>
 					</div>
 				</div>
 			</div>

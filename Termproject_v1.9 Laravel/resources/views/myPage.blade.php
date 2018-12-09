@@ -92,9 +92,6 @@
 				<div onclick="board('withdrawal')">
 					<strong>회원 탈퇴</strong>
 				</div>
-				<div onclick="board('inquiry');">
-					<strong>문의하기</strong>
-				</div>
 				@if(Auth::user()->user_auth == 'TOP' || Auth::user()->user_auth == 'A')
 					<div onclick="location.href='adminPage'">
 						<strong>관리자페이지</strong>
@@ -141,12 +138,6 @@
 							<button class="btn btn-primary" onclick="withdrawal();">확인</button>
 						</div>
 						<p>회원 탈퇴를 하기 위해서 비밀번호를 입력해 주세요</p>
-					</div>
-				</div>
-				<!-- doing inquiry -->
-				<div id="inquiry" style="display: none">
-					<div id="inquiryForm">
-						<h4>문의하기</h4>
 					</div>
 				</div>
 			</div>

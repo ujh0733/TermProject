@@ -15,6 +15,10 @@ use App\Purchase;
 
 class BoardController extends Controller
 {	
+	public function __construct(){
+		$this->middleware('writeAuth')->only(['write_page']);
+	}
+	
     public function index(Request $request){
 
 		$board_info = Board::orderBy('board_term_open', 'desc')->take(4)->get();
