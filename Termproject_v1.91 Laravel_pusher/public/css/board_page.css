@@ -1,0 +1,15 @@
+.genreTitle{
+  margin-top: 10px;
+  color: #71c449;
+}
+#loading{
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+#loading img{
+  float: none;
+  width: 100%;
+  height: 500px;
+  z-index: 1;
+}
