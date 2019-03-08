@@ -1,0 +1,107 @@
+nav{
+	width: 20%;
+	height: 500px;
+	background-color: white;
+}
+#navTitle{
+	width: 100%;
+	height: 100px;
+	background-color: green;
+	text-align: center;
+	line-height: 100px;
+}
+#myPageList > div{
+	padding: 10px;
+	cursor: pointer;
+	font-size: 18px;
+}
+#myPage_body{
+	width: 70%;
+	height: 500px;
+	margin: 0 auto;
+}
+#myPageTop{
+	width: 100%;
+	height: 100px;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	margin: 0 auto;
+}
+#myPageTop > div > img{
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
+#myPageTop > div{
+	display: flex;
+}
+#myPageTop >div > div{
+	margin-left: 15px;
+}
+
+#myPageTop > div{
+	float: left;
+	width: 210px;
+	height: 80px;
+	margin: 10px;
+	padding: 15px;
+	cursor: pointer;
+}
+
+.myWrite{
+	width: 80%;
+	margin: 0 auto;
+	cursor: pointer;
+	padding: 10px;
+	border-top: 1px solid black;
+}
+.myWrite:nth-child(1){
+	border-top:none;
+}
+.myWrite > span{
+	margin-left: 15px;
+}
+.myWriteImg{
+	width: 50px;
+	height: 50px;
+}
+
+
+#myPageBottom{
+	width: 100%;
+	height: 400px;
+	margin-top: 10px;
+	border: 1px solid black;
+	overflow: scroll;
+}
+#myPageBottom > div{
+	width: 100%;
+	height: 300px;
+}
+
+#passInput{
+	width: 400px;
+}
+
+#withdrawalForm{
+	width: 90%;
+	margin: 0 auto;
+}
+
+#withdrawalForm > h4{
+	margin-top: 15px;
+	text-align: center;
+}
+#withdrawalForm > p{
+	width: 70%;
+	margin: 0 auto;
+	font-size: 13px;
+	margin-top: 5px;
+}
+
+#withdrawalForm > div{
+	width: 70%;
+	margin: 0 auto;
+	display: flex;
+	margin-top: 15px;
+}
