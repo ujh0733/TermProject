@@ -102,7 +102,5 @@ Route::get('adminAjax', 'AdminController@adminAjax');
 Route::post('adminPostAjax', 'AdminController@adminPostAjax');
 
 			/*  pusher  */
-Route::get('pusherTest', 'testController@pusherTest');
-Route::get('pusherHome', 'testController@pusherHome');
-Route::get('pusherServer', 'testController@pusherServer');
-Route::post('pusherAjaxTest', 'testController@pusherAjaxTest');
+Route::get('pusherServer', 'PusherController@pusherServer');
+Route::post('pusherAjax', 'PusherController@pusherAjax');

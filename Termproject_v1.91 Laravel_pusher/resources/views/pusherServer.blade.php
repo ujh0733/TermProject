@@ -19,14 +19,9 @@
   //$data['message'] = "test";
   //$data['message'] = isset($_REQUEST["num"])?$_REQUEST["num"]:"test";
 
-  $channelData = array();
-  
   $num = isset($_REQUEST["num"])?$_REQUEST["num"]:"notNum";
   $id = isset($_REQUEST["id"])?$_REQUEST["id"]:"NotId";
 
-  if($num){
-    array_push($channelData, $num);
-  }
 
   $data = array(
     'num' => $num,
@@ -36,11 +31,3 @@
   $pusher->trigger('seat-channel', $data['num'], $data['id']);
   
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
-  Hello
-</body>
-</html>

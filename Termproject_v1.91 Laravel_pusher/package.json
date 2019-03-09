@@ -19,5 +19,9 @@
         "popper.js": "^1.12",
         "sweetalert": "^2.0.8",
         "vue": "^2.5.17"
+    },
+    "dependencies": {
+        "laravel-echo": "^1.5.3",
+        "pusher-js": "^4.4.0"
     }
 }

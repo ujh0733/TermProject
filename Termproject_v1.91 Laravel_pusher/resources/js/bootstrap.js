@@ -1,14 +1,3 @@
-import Echo from "laravel-echo";
-
-window.Pusher = require('pusher-js');
-
-window.Echo = new Echo({
-	broadcaster: 'pusher',
-	key: 'ec792b864a013c22fe72',
-	cluster: 'ap2',
-	encrypted: true
-});
-
 window._ = require('lodash');
 
 /**
@@ -64,3 +53,15 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+//Pusher Realtime
+import Echo from "laravel-echo";
+
+//window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+	broadcaster: 'pusher',
+	key: 'ec792b864a013c22fe72',
+	cluster: 'eu',
+	encrypted: true
+});

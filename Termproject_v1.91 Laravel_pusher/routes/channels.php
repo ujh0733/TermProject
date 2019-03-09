@@ -15,10 +15,6 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('video', function($user){
-	return[
-		'id' => $user->id,
-		'name' => $user->name,
-	];
-});
-
+Braodcast::channel('seat-channel', function($user, $orderId){
+	return $user->$user_id === Order::findOrNew($orderId)->user_id;
+})

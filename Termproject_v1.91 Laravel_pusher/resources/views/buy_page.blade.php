@@ -49,10 +49,12 @@
 	<script src="js/view.js"></script>
 	<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 	<script>
-		$(document).ready(function(){
 
+		$(document).ready(function(){
 			var num = <?= $board_num ?>;	//글 번호
 			var pusherNow = true;
+			var clickSeatNum, day, tempArr;		//ajax send data
+			var refreshArr = new Array();
 
 			Pusher.logToConsole = true;
 
@@ -68,15 +70,30 @@
 		      forceTLS: true
 		    });
 
-		    var channel = pusher.subscribe('seat-channel');
+		    var channel = pusher.subscribe('seat-channel');		//새로고침시 데이터도 여기 처리
 		     	channel.bind(num, function(data) {
 
 		    		var seatNum = data;
-		    		if(pusherNow == true){
+		    		alert(data);
+		    		if(typeof(seatNum) == 'object'){
+		    			for(var i = 0; i < seatNum.length; i++){
+		    				$("#"+seatNum[i]).removeClass('now');
+		    			}
+		    		}else if(pusherNow == true){
 			    		$("#"+seatNum).toggleClass('now');
-			    	}			    	
+			    	}
 		      	});
 
+		    $(window).on("beforeunload", function() {
+		    	click_seat('refresh');
+		    	var refreshTemp = $('#modifySeat').val();
+				$.post("pusherAjax", {num:num, id:refreshArr, day:day, data:refreshTemp, _token:CSRF_TOKEN, async:false},
+		            function(data){
+		            	
+		        });
+			});
+
+		    
 			/*Pusher Realtime end*/
 
 			var apt = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
@@ -115,13 +132,15 @@
 
 	            		if(seats[i][j] == 0){
 	            			seatsForm += "<div class='seat comeback' id='"+seatsCode+j+"'></div>";
-	            		}else if(seats[i][j] == 1){
+	            		}else if(seats[i][j] == 1){		//공석
 	            			seatsForm += "<div class='seat enable' id='"+seatsCode+j+"'>"+seatsCode+j+"</div>";
-	            		}else if(seats[i][j] == 2){
+	            		}else if(seats[i][j] == 2){		//예약완료
 	            			seatsForm += "<div class='seat complete' id='"+seatsCode+j+"'></div>";
-	            		}else if(seats[i][j] == 3){
-	            			seatsForm += "<div class='seat now' id='"+seatsCode+j+"'>"+seatsCode+j+"</div>";
-	            		}
+	            		}else if(seats[i][j] == 3){		//선택중
+	            			seatsForm += "<div class='seat enable now' id='"+seatsCode+j+"'>"+seatsCode+j+"</div>";
+	            		}/*else if(seats[i][j] == 4){		//내가 선택했었던거 
+	            			seatsForm += "<div class='seat enable' id='"+seatsCode+j+"'>"+seatsCode+j+"</div>";
+	            		}*/
 	            	}
 	            	seatsForm += "</div>";
 	            }
@@ -133,7 +152,7 @@
 	            $('#seatsFrom').css("width", (boardWidth*setWidth)+(4*boardWidth)+"px");		//좌석의 width길이를 좌석수에 따라 지정
 	            $('#seatsFrom .seat').css({"width": setWidth+"px", "height": setWidth+"px"});
             //좌석 그리기 끝
-}
+			}
 
             var cnt = 0;
             $("#cnt").html(cnt);
@@ -143,12 +162,13 @@
 			function seatOption(){
 	            $(".seat").click(function(){
 	            	
-	            	var clickSeatNum = $(this).html();
+	            	clickSeatNum = $(this).html();
 	            	var id = clickSeatNum+'sel';
+	            	day = $("#day").val();
 
 	            	if($(this).hasClass('disable')){	// 선택 되있으면..
 	            		var delId = $(this).attr('id')+'sel';
-	            		$("#"+delId).remove();
+	            		$("#"+delId).remove(); 
 	            		cnt--;
 	            		$("#cnt").val(cnt);
 		            	$("#price").val(cnt*price);
@@ -157,42 +177,62 @@
 		            	cnt++;
 		            	$("#cnt").val(cnt);
 		            	$("#price").val(cnt*price);
+
 	            	}
 
 	            	pusherNow = false;
+	            	$(this).toggleClass('disable');
+
+	            	click_seat('go');
+	            	tempArr = $('#modifySeat').val();
+
 		            $(function(){
-		            	$.post("pusherAjaxTest", {num:num, id:clickSeatNum, _token:CSRF_TOKEN},
+		            	$.post("pusherAjax", {num:num, id:clickSeatNum, day:day, data:tempArr, _token:CSRF_TOKEN},
 		            		function(data){
 		            			pusherNow = true;
 		            		});
-		            }); 
-
-	            	$(this).toggleClass('disable');
+		            }); 	
 	            });
 			}
 			makeSeats();
 			seatOption();
-		
-            $("#result").click(function(){
-				var arr = new Array();
 
+            $("#result").click(function(){
+				click_seat('end');
+			});
+
+			$("#day").change(function(){
+				change_seats();
+				$("#userSelect").html('');
+				$("#price").val('0');
+			});
+
+			function click_seat(state){
+				var arr = new Array();
+				var play = state;
 				var rs = '[';
 
 				for(var i = 0; i < boardHeight; i++){
 					arr[i] = [];
 					rs += "[";
 					for(var j = 0; j < boardWidth; j++){
-						if($("#"+apt[i]+j).hasClass('comeback')){
+						if($("#"+apt[i]+j).hasClass('comeback')){	//통로
 							arr[i][j] = 0;
-						}else if($("#"+apt[i]+j).hasClass('complete')){
+						}else if($("#"+apt[i]+j).hasClass('complete')){	//예약됨
 							arr[i][j] = 2;
-						}else if($("#"+apt[i]+j).hasClass('disable')){
-							arr[i][j] = 2;
+						}else if($("#"+apt[i]+j).hasClass('disable')){	//선택됨
+							if(play == 'refresh'){
+								arr[i][j] = 1;
+								refreshArr.push(apt[i]+j);
+							}else{
+								arr[i][j] = 3;
+							}
+						}else if($("#"+apt[i]+j).hasClass('now')){
+							arr[i][j] = 3;
 						}else{
 							arr[i][j] = 1;
 						}
-						/*arr[i][j] = ++c;
-						console.log(arr[i][j]);*/
+
 						if(j < boardWidth-1){
 							rs += arr[i][j]+",";
 						}else{
@@ -207,13 +247,7 @@
 				}
 				rs += "]";
 				$('#modifySeat').val(rs);
-			});
-
-			$("#day").change(function(){
-				change_seats();
-				$("#userSelect").html('');
-				$("#price").val('0');
-			});
+			}
 
 			function change_seats(){
 			    $.get("buy_loadMoreData", {num:num, day:$("#day").val(), price:price, cnt:cnt}, function(data){
